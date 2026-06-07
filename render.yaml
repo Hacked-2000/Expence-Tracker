@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: expence-tracker-api
+    runtime: node
+    rootDir: ExpenceTracker-backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  - type: web
+    name: expence-tracker-app
+    runtime: static
+    rootDir: ExpenceTracker_frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
