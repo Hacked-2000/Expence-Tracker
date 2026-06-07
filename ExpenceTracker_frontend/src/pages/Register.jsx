@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { register, saveSession, isAuthenticated } from '../utils/apiEndpoints';
 import { validateRegister } from '../utils/validation';
+import Footer from '../components/Footer';
 
 const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -49,7 +50,8 @@ const Register = () => {
   };
 
   return (
-    <Box className="auth-wrapper">
+    <div className="auth-layout">
+      <Box className="auth-wrapper">
       <Paper className="auth-card" sx={{ p: 4 }}>
         <Box className="auth-brand">
           <Box className="auth-brand-icon">₹</Box>
@@ -115,7 +117,9 @@ const Register = () => {
           </Link>
         </Typography>
       </Paper>
-    </Box>
+      </Box>
+      <Footer />
+    </div>
   );
 };
 

@@ -43,6 +43,51 @@ body {
   color: var(--text-primary);
 }
 
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-layout .page-container {
+  flex: 1;
+}
+
+.auth-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-layout .auth-wrapper {
+  flex: 1;
+  min-height: auto;
+}
+
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1100;
+  background: #ffffff;
+  padding: 16px 24px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.footer-copy {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.footer-brand {
+  color: var(--primary);
+  font-weight: 700;
+}
+
 .page-container {
   padding: 24px;
   max-width: 1200px;

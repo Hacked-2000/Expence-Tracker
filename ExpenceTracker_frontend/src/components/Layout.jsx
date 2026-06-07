@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 const Layout = ({ mode, toggleTheme }) => {
   const location = useLocation();
@@ -16,12 +17,13 @@ const Layout = ({ mode, toggleTheme }) => {
   }, [isAppPage]);
 
   return (
-    <>
+    <div className="app-layout">
       <Navbar mode={mode} toggleTheme={toggleTheme} />
       <main className="page-container hide-scrollbar">
         <Outlet />
       </main>
-    </>
+      <Footer />
+    </div>
   );
 };
 
