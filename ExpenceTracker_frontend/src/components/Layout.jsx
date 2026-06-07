@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-const Layout = ({ mode, toggleTheme }) => {
+const Layout = () => {
   const location = useLocation();
   const isAppPage = location.pathname === '/' || location.pathname === '/expenses';
 
@@ -18,7 +18,7 @@ const Layout = ({ mode, toggleTheme }) => {
 
   return (
     <div className="app-layout">
-      <Navbar mode={mode} toggleTheme={toggleTheme} />
+      <Navbar />
       <main className="page-container hide-scrollbar">
         <Outlet />
       </main>

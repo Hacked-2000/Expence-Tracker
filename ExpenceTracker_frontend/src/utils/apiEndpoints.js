@@ -1,6 +1,8 @@
 const BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
-const getToken = () => localStorage.getItem('token');
+const storage = sessionStorage;
+
+const getToken = () => storage.getItem('token');
 
 const request = async (url, options = {}) => {
   const token = getToken();
@@ -56,17 +58,17 @@ export const deleteExpense = (id) =>
   request(`/expenses/${id}`, { method: 'DELETE' });
 
 export const saveSession = (token, user) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('user', JSON.stringify(user));
+  storage.setItem('token', token);
+  storage.setItem('user', JSON.stringify(user));
 };
 
 export const clearSession = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
+  storage.removeItem('token');
+  storage.removeItem('user');
 };
 
 export const getUser = () => {
-  const user = localStorage.getItem('user');
+  const user = storage.getItem('user');
   return user ? JSON.parse(user) : null;
 };
 

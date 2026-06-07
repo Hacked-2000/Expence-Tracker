@@ -1,4 +1,5 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { isAuthenticated } from './utils/apiEndpoints';
@@ -10,9 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Expenses from './pages/Expenses';
 
 function App() {
-  const [mode, setMode] = useState(
-    () => localStorage.getItem('theme') || 'light'
-  );
+  const mode = useSelector((state) => state.theme.mode);
 
   const theme = useMemo(() => getTheme(mode), [mode]);
 
@@ -20,19 +19,11 @@ function App() {
     document.documentElement.setAttribute('data-theme', mode);
   }, [mode]);
 
-  const toggleTheme = () => {
-    setMode((prev) => {
-      const next = prev === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', next);
-      return next;
-    });
-  };
-
   const ProtectedLayout = () => {
     if (!isAuthenticated()) {
       return <Navigate to="/login" replace />;
     }
-    return <Layout mode={mode} toggleTheme={toggleTheme} />;
+    return <Layout />;
   };
 
   return (

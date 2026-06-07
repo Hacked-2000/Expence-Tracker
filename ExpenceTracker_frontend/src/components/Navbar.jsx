@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleTheme } from '../store/themeSlice';
 import {
   AppBar,
   Toolbar,
@@ -38,9 +40,11 @@ const getInitials = (name) => {
     .toUpperCase();
 };
 
-const Navbar = ({ mode, toggleTheme }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.theme.mode);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -83,7 +87,7 @@ const Navbar = ({ mode, toggleTheme }) => {
             Expense Tracker
           </Typography>
           {!isMobile && navLinks}
-          <IconButton color="inherit" onClick={toggleTheme}>
+          <IconButton color="inherit" onClick={() => dispatch(toggleTheme())}>
             {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
           </IconButton>
           <IconButton

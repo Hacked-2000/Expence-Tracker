@@ -2,6 +2,8 @@ node_modules/
 dist/
 .env
 .env.local
+ExpenceTracker_frontend/.env
+ExpenceTracker-backend/.env
 *.log
 .DS_Store
 .vscode/

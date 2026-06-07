@@ -18,6 +18,18 @@
   --shadow-md: 0 8px 24px rgba(99, 102, 241, 0.12);
   --gradient-main: linear-gradient(135deg, #6366f1 0%, #4f46e5 55%, #7c3aed 100%);
   --gradient-auth: linear-gradient(135deg, #eef2ff 0%, #f4f6fb 40%, #ecfdf5 100%);
+  --auth-gradient-animated: linear-gradient(
+    -45deg,
+    #eef2ff,
+    #f0f4ff,
+    #ecfdf5,
+    #ede9fe,
+    #eef2ff
+  );
+  --auth-blob-1: rgba(99, 102, 241, 0.35);
+  --auth-blob-2: rgba(16, 185, 129, 0.28);
+  --auth-blob-3: rgba(124, 58, 237, 0.22);
+  --auth-blob-4: rgba(6, 182, 212, 0.2);
 }
 
 [data-theme='dark'] {
@@ -34,6 +46,18 @@
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
   --gradient-main: linear-gradient(135deg, #312e81 0%, #1e1b4b 55%, #0f172a 100%);
   --gradient-auth: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #134e4a 100%);
+  --auth-gradient-animated: linear-gradient(
+    -45deg,
+    #0f172a,
+    #1e1b4b,
+    #134e4a,
+    #312e81,
+    #0f172a
+  );
+  --auth-blob-1: rgba(129, 140, 248, 0.4);
+  --auth-blob-2: rgba(52, 211, 153, 0.3);
+  --auth-blob-3: rgba(167, 139, 250, 0.35);
+  --auth-blob-4: rgba(34, 211, 238, 0.25);
 }
 
 body {
@@ -57,22 +81,136 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--auth-gradient-animated);
+  background-size: 400% 400%;
+  animation: authGradientShift 14s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes authGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.auth-bg-animation {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.85;
+}
+
+.auth-blob-1 {
+  width: 380px;
+  height: 380px;
+  background: var(--auth-blob-1);
+  top: -8%;
+  right: -6%;
+  animation: authFloat1 18s ease-in-out infinite;
+}
+
+.auth-blob-2 {
+  width: 320px;
+  height: 320px;
+  background: var(--auth-blob-2);
+  bottom: 12%;
+  left: -8%;
+  animation: authFloat2 22s ease-in-out infinite;
+}
+
+.auth-blob-3 {
+  width: 260px;
+  height: 260px;
+  background: var(--auth-blob-3);
+  top: 42%;
+  left: 38%;
+  animation: authFloat3 20s ease-in-out infinite;
+}
+
+.auth-blob-4 {
+  width: 200px;
+  height: 200px;
+  background: var(--auth-blob-4);
+  bottom: 28%;
+  right: 18%;
+  animation: authFloat4 16s ease-in-out infinite;
+}
+
+@keyframes authFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, 50px) scale(1.1); }
+  66% { transform: translate(30px, -30px) scale(0.92); }
+}
+
+@keyframes authFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -40px) scale(1.08); }
+  66% { transform: translate(-35px, 25px) scale(0.95); }
+}
+
+@keyframes authFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-45px, -35px) scale(1.12); }
+}
+
+@keyframes authFloat4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(-30px, 40px) scale(1.06); }
+  80% { transform: translate(35px, -25px) scale(0.9); }
+}
+
+[data-theme='dark'] .auth-blob {
+  filter: blur(70px);
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-layout,
+  .auth-blob {
+    animation: none;
+  }
 }
 
 .auth-layout .auth-wrapper {
   flex: 1;
-  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px 16px;
+  min-height: 0;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.auth-layout .app-footer {
+  position: static;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.app-layout .app-footer {
+  position: sticky;
 }
 
 .app-footer {
   position: sticky;
   bottom: 0;
   z-index: 1100;
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 16px 24px;
   text-align: center;
   border-top: 1px solid var(--border);
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 }
 
 .footer-copy {
@@ -120,47 +258,22 @@ html.hide-scrollbar body::-webkit-scrollbar {
 }
 
 .auth-wrapper {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: var(--gradient-auth);
-  position: relative;
-}
-
-.auth-wrapper::before {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-  top: -100px;
-  right: -100px;
-  pointer-events: none;
-}
-
-.auth-wrapper::after {
-  content: '';
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
-  bottom: -80px;
-  left: -80px;
-  pointer-events: none;
+  width: 100%;
 }
 
 .auth-card {
   width: 100%;
   max-width: 420px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   border-radius: 20px !important;
   border: 1px solid var(--border) !important;
   box-shadow: var(--shadow-md) !important;
+  backdrop-filter: blur(8px);
 }
 
 .auth-brand {
